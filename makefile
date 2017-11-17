@@ -1,23 +1,16 @@
 OBJ = helper.o Plugboard.o Reflector.o Rotors.o Enigma.o main.o
-
-enigma: $(OBJ)
-	g++ $(OBJ) -o enigma
+CXX = g++
+CXXFLAGS = -Wall -g -MMD
+EXE = enigma
+$(EXE): $(OBJ)
+	$(CXX) $(OBJ) -o $@
 
 %.o: %.cpp
-	g++ -std=c++11 -Wall -g -c $<
+	$(CXX) $(CXXFLAGS) -std=c++11 -c $<
 
-main.o: helper.h errors.h Enigma.h
-
-Plugboard.o: Plugboard.h helper.h errors.h
-
-helper.o: helper.h
-
-Reflector.o: Reflector.h
-
-Rotors.o: Rotors.h
-
-Enigma.o: Reflector.h Plugboard.h Enigma.h Rotors.h
+-include $(OBJ:.o=.d)
 
 clean:
-	rm -f *.o enigma $(OBJ:.o=.d)
+	rm -f *.o $(EXE) $(OBJ:.o=.d)
+.PHONY:clean
 
