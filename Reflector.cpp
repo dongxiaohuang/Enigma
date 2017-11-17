@@ -15,17 +15,18 @@ Reflector::Reflector(const char *config_filename) {
 
 void Reflector::checkRf() {
   getStringVector(FILENAME, v);
-  if (!isInvalidMapping(v)) {
-    cerr << error_description(INVALID_REFLECTOR_MAPPING);
-    exit(INVALID_REFLECTOR_MAPPING);
-  }
-
   if (v.size() != 26) {
     cerr << error_description(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
     exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   }
-
+  if (!isInvalidMapping(v)) {
+    cerr << error_description(INVALID_REFLECTOR_MAPPING);
+    exit(INVALID_REFLECTOR_MAPPING);
+  }
   invalidIndexOrChar(v);
+
+
+
 
 }
 

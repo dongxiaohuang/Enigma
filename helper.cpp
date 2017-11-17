@@ -99,7 +99,7 @@ void invalidIndexOrChar(std::vector<string> v) {
     }
   }
 }
-
+// TODO: check
 void checkPos(const char *filename, int argc) {
   // check if pos configue is valid or not
   std::vector<string> pos_vec_str;

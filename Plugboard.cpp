@@ -18,13 +18,13 @@ void Plugboard::checkpg() {
     exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
   }
 
-  if (v.size() % 2 != 0) {
+  if (v.size() % 2 != 0 || v.size() > 26) {
     cerr << error_description(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
   }
-
-
   invalidIndexOrChar(v);
+
+
 }
 
 int Plugboard::start(char ch) {
