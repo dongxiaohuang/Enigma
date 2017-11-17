@@ -7,25 +7,25 @@
 using namespace std;
 
 class Rotors {
- public:
-  void checkRt();
+public:
+    void checkRt();
 
-  Rotors(const char *filename, int pos);
+    Rotors(const char *filename, int pos);
 
-  int start(int, int, bool);
+    int start(int, int, bool);
 
-  int getTrigerRotateTimes();
+    int getTrigerRotateTimes();
 
-  int getRotateTimes();
+    int getRotateTimes();
 
- private:
-  const char *FILENAME;
-  vector<int> rot_vec;
-  vector<string> v;
-  vector<int> notch_vec;
-  int pos;
-  int rotate_times;
-  int trigger_rotate_times;
+private:
+    const char *FILENAME;
+    vector<int> rot_vec;
+    vector<string> v;
+    vector<int> notch_vec;
+    int pos;
+    int rotate_times;
+    int trigger_rotate_times;
 };
 
 #endif

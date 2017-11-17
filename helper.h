@@ -19,10 +19,10 @@ char intToChar(int num);
 bool is_digits(const std::string &str);
 
 void getStringVector(const char *,
-		     std::vector<string> &v); //if you use string you need to include<string> and using namespace std
+                     std::vector<string> &v); //if you use string you need to include<string> and using namespace std
 bool isInvalidMapping(std::vector<string> v);
 
-void invalidIndexOrChar(std::vector<string> v);
+int invalidIndexOrChar(std::vector<string> v);
 
 void checkPos(const char *filenam, int argc);
 

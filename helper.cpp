@@ -87,18 +87,17 @@ bool isInvalidMapping(std::vector<string> v) {
     return true;
 }
 
-void invalidIndexOrChar(std::vector<string> v) {
+int invalidIndexOrChar(std::vector<string> v) {
     for (unsigned k = 0; k < v.size(); ++k) {
         if (!is_digits(v[k])) {
-            cerr << error_description(NON_NUMERIC_CHARACTER);
-            exit(NON_NUMERIC_CHARACTER);
+            return NON_NUMERIC_CHARACTER;
         }
         int num = atoi(v.at(k).c_str());
         if (num > 25 || num < 0) {
-            cerr << error_description(INVALID_INDEX);
-            exit(INVALID_INDEX);
+            return INVALID_INDEX;
         }
     }
+    return -1;
 }
 
 // TODO: check
@@ -106,9 +105,23 @@ void checkPos(const char *filename, int argc) {
     // check if pos configue is valid or not
     std::vector<string> pos_vec_str;
     getStringVector(filename, pos_vec_str);
-    invalidIndexOrChar(pos_vec_str);
-    if (pos_vec_str.size() != (unsigned) (argc - NUM_NEEDED_FILES)) {
-        cerr << error_description(NO_ROTOR_STARTING_POSITION);
+    switch (invalidIndexOrChar(pos_vec_str)) {
+        case NON_NUMERIC_CHARACTER: {
+            cerr << "Non-numeric character in rotor positions file rotor.pos" << endl;
+            exit(NON_NUMERIC_CHARACTER);
+        }
+        case INVALID_INDEX: {
+            cerr << error_description(INVALID_INDEX) << endl;
+            exit(INVALID_INDEX);
+        }
+    }
+
+    unsigned num_rots = argc - NUM_NEEDED_FILES;
+    unsigned miss_pos_num = num_rots - pos_vec_str.size();
+    if (miss_pos_num != 0) {
+        for (unsigned i = pos_vec_str.size(); i <= num_rots - 1; ++i) {
+            cerr << "No starting position for rotor <<i<< in rotor position file: rotor.pos" << endl;
+        }
         exit(NO_ROTOR_STARTING_POSITION);
     }
 }
@@ -124,7 +137,7 @@ std::vector<int> getVector(std::vector<string> v) {
 
 void isUpperCh(char ch) {
     if (ch > 'Z' || ch < 'A') {
-        cerr << error_description(INVALID_INPUT_CHARACTER);
+        cerr << ch << " is not a valid input character (input characters must be upper case letters A-Z)!" << endl;
         exit(INVALID_INPUT_CHARACTER);
     }
 }
@@ -150,7 +163,7 @@ void checkParameters(int argc, char **argv) {
     } else
         enough_parameter_flag = 0;
     if (enough_parameter_flag == 0) {
-        cerr << error_description(INSUFFICIENT_NUMBER_OF_PARAMETERS);
+        cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>* rotor-positions)?" << endl;
         exit(INSUFFICIENT_NUMBER_OF_PARAMETERS);
     }
 }

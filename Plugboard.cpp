@@ -20,11 +20,22 @@ void Plugboard::checkpg() {
         }
 
         if (v.size() % 2 != 0 || v.size() > 26) {
-            cerr << error_description(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
+            cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
             exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
         }
-        invalidIndexOrChar(v);
+
+        switch (invalidIndexOrChar(v)) {
+            case NON_NUMERIC_CHARACTER: {
+                cerr << "Non-numeric character in plugboard file plugboard.pb" << endl;
+                exit(NON_NUMERIC_CHARACTER);
+            }
+            case INVALID_INDEX: {
+                cerr << error_description(INVALID_INDEX) << endl;
+                exit(INVALID_INDEX);
+            }
+        }
     }
+
 
 }
 

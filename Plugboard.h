@@ -7,17 +7,17 @@
 using namespace std;
 
 class Plugboard {
- public:
-  void checkpg();
+public:
+    void checkpg();
 
-  int start(char);
+    int start(char);
 
-  Plugboard(const char *filename);
+    Plugboard(const char *filename);
 
- private:
-  const char *FILENAME;
-  std::vector<int> vector1;
-  std::vector<string> v;
+private:
+    const char *FILENAME;
+    std::vector<int> vector1;
+    std::vector<string> v;
 };
 
 #endif

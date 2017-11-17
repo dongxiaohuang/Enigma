@@ -7,17 +7,17 @@
 using namespace std;
 
 class Reflector {
- public:
-  void checkRf();
+public:
+    void checkRf();
 
-  Reflector(const char *);
+    Reflector(const char *);
 
-  int start(int);
+    int start(int);
 
- private:
-  const char *FILENAME;
-  std::vector<int> ref_vec;
-  std::vector<string> v;
+private:
+    const char *FILENAME;
+    std::vector<int> ref_vec;
+    std::vector<string> v;
 
 };
 
