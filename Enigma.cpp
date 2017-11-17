@@ -5,8 +5,13 @@
 using namespace std;
 
 Enigma::Enigma(int argc, char **argv) : plugboard(argv[1]), reflector(argv[2]) {
-  number_of_rots = argc - NUM_NEEDED_FILES;
-  pos_vec = getVectorInt(argv[argc - 1]);
+  if(argc >=4) {
+    number_of_rots = argc - NUM_NEEDED_FILES;
+    pos_vec = getVectorInt(argv[argc - 1]);
+  }
+  else
+  {number_of_rots = 0;}
+
   for (int i = 0; i <= number_of_rots - 1; ++i) {
     rots.push_back(new Rotors(argv[3 + i], pos_vec[i]));
   }
