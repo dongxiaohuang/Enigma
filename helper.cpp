@@ -118,7 +118,7 @@ void checkPos(const char *filename, int argc) {
 
     unsigned num_rots = argc - NUM_NEEDED_FILES;
     unsigned miss_pos_num = num_rots - pos_vec_str.size();
-    if (miss_pos_num != 0) {
+    if (miss_pos_num < 0) {
         for (unsigned i = pos_vec_str.size(); i <= num_rots - 1; ++i) {
             cerr << "No starting position for rotor <<i<< in rotor position file: rotor.pos" << endl;
         }
