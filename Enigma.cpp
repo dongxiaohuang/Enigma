@@ -41,8 +41,9 @@ void Enigma::start() {
             rot_in = rots[number_of_rots - 1]->start(pb_in, cipher_nums, unReflected);
             if (number_of_rots >= 2) {
                 for (int i = 2; i <= number_of_rots; ++i) {
+                    int && last_trigger_times = rots[number_of_rots - i + 1]->getTrigerRotateTimes(); // use rvalue reference
                     rot_in = rots[number_of_rots - i]->start(rot_in,
-                                                             rots[number_of_rots - i + 1]->getTrigerRotateTimes(),
+                                                             last_trigger_times,
                                                              unReflected);
                 }
             }
@@ -51,7 +52,8 @@ void Enigma::start() {
             rot_in = rots[0]->start(rf_in, rots[0]->getRotateTimes(), unReflected);
             if (number_of_rots >= 2) {
                 for (int j = 1; j <= number_of_rots - 1; ++j) {
-                    rot_in = rots[j]->start(rot_in, rots[j]->getRotateTimes(), unReflected);
+                    int && rotate_times = rots[j]->getRotateTimes();
+                    rot_in = rots[j]->start(rot_in, rotate_times, unReflected);
                 }
             }
 

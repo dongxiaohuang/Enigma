@@ -27,8 +27,8 @@ int Rotors::start(int in_num, int rote_times, bool un_reflected) {
     rotate_times = rote_times;
     relative_in_num = (in_num + rotate_times) % 26;
     if (un_reflected) {
-        for (unsigned i = 0; i < notch_vec.size(); ++i) {
-            if ((rote_times + pos) % 26 == notch_vec[i])
+        for (auto i:notch_vec) {
+            if ((rote_times + pos) % 26 == i)
                 trigger_rotate_times++;
         }
 

@@ -14,14 +14,15 @@ Plugboard::Plugboard(const char *config_filename) {
 void Plugboard::checkpg() {
     getStringVector(FILENAME, v);
     if (v.size() != 0) {
-        if (!isInvalidMapping(v)) {
-            cerr << error_description(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
-            exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
-        }
 
         if (v.size() % 2 != 0 || v.size() > 26) {
             cerr << "Incorrect number of parameters in plugboard file plugboard.pb" << endl;
             exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
+        }
+
+        if (!isInvalidMapping(v)) {
+            cerr << error_description(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
+            exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
         }
 
         switch (invalidIndexOrChar(v)) {
@@ -34,6 +35,9 @@ void Plugboard::checkpg() {
                 exit(INVALID_INDEX);
             }
         }
+
+
+
     }
 
 
