@@ -16,7 +16,7 @@ const char *error_description(int code);
 
 char intToChar(int num);
 
-bool is_digits(const std::string &str);
+bool isDigits(const std::string &str);
 
 void getStringVector(const char *,
                      std::vector<string> &v); //if you use string you need to include<string> and using namespace std

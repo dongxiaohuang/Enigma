@@ -5,11 +5,11 @@
 using namespace std;
 
 Enigma::Enigma(int argc, char **argv) : plugboard(argv[1]), reflector(argv[2]) {
-    if (argc >= 4) {
+    if (argc >= 4) { // ONLY argc >4 THE CASE HAS ROTORS
         number_of_rots = argc - NUM_NEEDED_FILES;
         pos_vec = getVectorInt(argv[argc - 1]);
     } else { number_of_rots = 0; }
-
+    //INITIALIZE THE ROTORS
     for (int i = 0; i <= number_of_rots - 1; ++i) {
         rots.push_back(new Rotors(argv[3 + i], pos_vec[i]));
     }
@@ -18,13 +18,13 @@ Enigma::Enigma(int argc, char **argv) : plugboard(argv[1]), reflector(argv[2]) {
 
 
 void Enigma::start() {
-
+    // READ CHAR FROM KEYBOARD
     char ch;
-    // clear previous result
     string inputstream;
     getline(cin, inputstream);
     for (unsigned ch_index = 0; ch_index < inputstream.length(); ch_index++) {
         ch = inputstream[ch_index];
+        //IGNORE THE WHITESPACE
         if (ch == ' ')
             continue;
         //CHECK IF IT IS UPPER CASE LETTER
@@ -33,11 +33,13 @@ void Enigma::start() {
         int rot_in;
         int rf_in;
         int pb_in;
-        bool unReflected = true;
+        bool unReflected = true; // TO INDICATE THAT THE CIPHER INPUT IS IS UNREFLECTED OR NOT
         pb_in = plugboard.start(ch);
         if (number_of_rots == 0) {
+            //CASE WITHOUT ROTORS
             rot_in = reflector.start(pb_in);
         } else {
+            // CASE WITH ROTORS
             rot_in = rots[number_of_rots - 1]->start(pb_in, cipher_nums, unReflected);
             if (number_of_rots >= 2) {
                 for (int i = 2; i <= number_of_rots; ++i) {
@@ -48,7 +50,7 @@ void Enigma::start() {
                 }
             }
             rf_in = reflector.start(rot_in);
-            unReflected = false;
+            unReflected = false;// THE CIPHER IS REFLECTED
             rot_in = rots[0]->start(rf_in, rots[0]->getRotateTimes(), unReflected);
             if (number_of_rots >= 2) {
                 for (int j = 1; j <= number_of_rots - 1; ++j) {
@@ -66,6 +68,7 @@ void Enigma::start() {
 }
 
 Enigma::~Enigma() {
+    // RELEASE THE ROTORS CREATED IN THE HEAP
     for (int i = 0; i < number_of_rots; ++i) {
         delete rots[i];
     }

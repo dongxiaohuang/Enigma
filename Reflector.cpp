@@ -51,5 +51,5 @@ int Reflector::start(int num) {
 
     }
 
-    return -1;// unable to reflected
+    exit(-1);
 }

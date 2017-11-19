@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// FUNCTION TO GET VECTOR OF INT TYPE FROM FILES
 std::vector<int> getVectorInt(const char *filename) {
     ifstream file(filename);
     if (file.fail())
@@ -56,11 +57,11 @@ char intToChar(int num) {
     return ch;
 }
 
-bool is_digits(const std::string &str) {
+bool isDigits(const std::string &str) {
     return all_of(str.begin(), str.end(), ::isdigit); // C++11
 }
 
-
+// GET STRING VECTOR FROM FILES
 void getStringVector(const char *FILENAME, std::vector<string> &v) {
     ifstream ifstr(FILENAME);
     if (ifstr.fail()) {
@@ -77,6 +78,7 @@ void getStringVector(const char *FILENAME, std::vector<string> &v) {
     }
 }
 
+// TO CHECK IF THE MAPPING IS VALID OR NOT BY CHECK IF THE VECTOR CONTAIN A CERTAIN NUMBER TWICE OR NOT
 bool isInvalidMapping(std::vector<string> v) {
     for (unsigned i = 0; i < v.size() - 1; ++i) {
         for (unsigned j = i + 1; j < v.size(); ++j) {
@@ -87,9 +89,10 @@ bool isInvalidMapping(std::vector<string> v) {
     return true;
 }
 
+// TO CHECK IF THE VECTOR OF STRING CONTAINS A NON-NUMERIC NUMBER OR INVALID INDEX
 int invalidIndexOrChar(std::vector<string> v) {
     for (unsigned k = 0; k < v.size(); ++k) {
-        if (!is_digits(v[k])) {
+        if (!isDigits(v[k])) {
             return NON_NUMERIC_CHARACTER;
         }
         int num = atoi(v.at(k).c_str());
@@ -100,9 +103,8 @@ int invalidIndexOrChar(std::vector<string> v) {
     return -1;
 }
 
-// TODO: check
+// CHECK POSITION CONFIGURE IS VALID OR NOT
 void checkPos(const char *filename, int argc) {
-    // check if pos configue is valid or not
     std::vector<string> pos_vec_str;
     getStringVector(filename, pos_vec_str);
     switch (invalidIndexOrChar(pos_vec_str)) {
@@ -117,15 +119,16 @@ void checkPos(const char *filename, int argc) {
     }
 
     unsigned num_rots = argc - NUM_NEEDED_FILES;
-//    unsigned miss_pos_num = num_rots - pos_vec_str.size();
+    // ONLY THE NUMBER OF ROTORS LESS THAN THE NUMBER OF POSITION VECTOR, IT RETURN ERROR. THE CASE POSITION NUMBERS MORE THAN ROTORS NUMBER IS VALID
     if (num_rots > pos_vec_str.size()) {
         for (unsigned i = pos_vec_str.size(); i <= num_rots - 1; ++i) {
-            cerr << "No starting position for rotor "<<i<<" in rotor position file: rotor.pos" << endl;
+            cerr << "No starting position for rotor " << i << " in rotor position file: rotor.pos" << endl;
         }
         exit(NO_ROTOR_STARTING_POSITION);
     }
 }
 
+// TURN THE VECTOR OF STRING TO VECTOR OF INT
 std::vector<int> getVector(std::vector<string> v) {
     std::vector<int> intNumbers;
     for (unsigned i = 0; i < v.size(); i++) {
@@ -142,9 +145,11 @@ void isUpperCh(char ch) {
     }
 }
 
+// CHECK CONFIGURE FILES
 void checkParameters(int argc, char **argv) {
     int enough_parameter_flag = 1;
     string filename;
+    // MUST ASSURE argc IS BIGGER THAN 3 ANC BEGIN TO CHECK OR IT AMY RETURN SEGMENTAL FAULT
     if (argc >= 3) {
         //check if contain pb file
         filename = argv[1];

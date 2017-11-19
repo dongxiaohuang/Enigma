@@ -8,12 +8,13 @@ using namespace std;
 Rotors::Rotors(const char *filename, int pos_num) {
     FILENAME = filename;
     pos = pos_num;
-    trigger_rotate_times = 0;
+    trigger_rotate_times = 0; // USED TO INDICATE THE TIMES OF ROTATE OF THE ROTORS EXPECT FOR RIGHT MOST ROTOR
     checkRt();
-    rot_vec = getVector(v);
+    rot_vec = getVector(v); // GET THE RAW CONFIGURE NUMBERS OF ROTOR FILE
+    // GET NOTCH VECTOR AND MAPPING VECTOR
     while (rot_vec.size() > 26) {
-        notch_vec.push_back(rot_vec[rot_vec.size() - 1]);
-        rot_vec.pop_back();
+        notch_vec.push_back(rot_vec[rot_vec.size() - 1]);// NOTCH VECTOR
+        rot_vec.pop_back(); // MAPPING VECTOR
     }
 }
 
@@ -22,23 +23,27 @@ int Rotors::start(int in_num, int rote_times, bool un_reflected) {
     int relative_in_num;
     int map_to_rel;
     int map_to_abs;
-    abs_in = in_num;
-    in_num = (in_num + pos) % 26;
+    abs_in = in_num;//INPUT OF ABSOLUTE POSITION
+    in_num = (in_num + pos) % 26;// INPUT OF RELATIVE POSITION WHEN UN-ROTATED
     rotate_times = rote_times;
-    relative_in_num = (in_num + rotate_times) % 26;
+    relative_in_num = (in_num + rotate_times) % 26;// RELATIVE INPUT
     if (un_reflected) {
-        for (auto i:notch_vec) {
+        // UNREFLECTED
+        for (auto i:notch_vec) {//ITERATE THE NOTCH VECTOR
+            // IF THE NOTCH HIT THE ABSOLUTE 'A' POSITION TRIGGER ONE TIME OF NEXT ROTOR TO ROTATE
             if ((rote_times + pos) % 26 == i)
                 trigger_rotate_times++;
         }
-
+        // MAPPING TO NUMBER IN RELATIVE POSITION
         map_to_rel = rot_vec[relative_in_num];
-    } else {
+    } else {// WHEN REFLECTED
+        // DE-MAPPING
         for (unsigned i = 0; i < rot_vec.size(); ++i) {
             if (rot_vec[i] == relative_in_num)
                 map_to_rel = i;
         }
     }
+    // CONVERT THE RELATIVE POSITION TO ABSOLUTE POSITION
     map_to_abs = (map_to_rel - relative_in_num + abs_in + 26) % 26;
     return map_to_abs;
 }

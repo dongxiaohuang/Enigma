@@ -10,5 +10,4 @@
 #define INVALID_REFLECTOR_MAPPING            9
 #define INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS    10
 #define ERROR_OPENING_CONFIGURATION_FILE        11
-
 #define NO_ERROR                    0
